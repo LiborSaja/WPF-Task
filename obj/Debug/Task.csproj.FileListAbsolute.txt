@@ -1,0 +1,15 @@
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.csproj.AssemblyReference.cache
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\MainWindow.g.cs
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\App.g.cs
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task_MarkupCompile.cache
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task_MarkupCompile.lref
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\bin\Debug\Task.exe.config
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\bin\Debug\Task.exe
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\bin\Debug\Task.pdb
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\MainWindow.baml
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.g.resources
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.Properties.Resources.resources
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.csproj.GenerateResource.cache
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.csproj.CoreCompileInputs.cache
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.exe
+C:\Users\sajal\Desktop\Moje projekty\Csharp\WPF\Task\Task\obj\Debug\Task.pdb

@@ -1,0 +1,83 @@
+﻿<Window x:Class="Task.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000">
+    <Grid Margin="10">
+        <!-- Hlavní StackPanel pro seskupení prvků vertikálně -->
+        <StackPanel>
+            <!-- Horní řádek s tlačítky -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+                <Button Content="Nahrát soubor" Width="120" Margin="5" />
+                <Button Content="Přidat položku" Width="120" Margin="5" />
+                <Button Content="Smazat položku" Width="120" Margin="5" />
+            </StackPanel>
+
+            <!-- Tabulka a filtrace -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Hlavní tabulka s údaji o prodejích -->
+                <GroupBox Header="Údaje o prodejích" FontWeight="Bold" Margin="5" Grid.Column="0">
+                    <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto" />
+                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
+                            <DataGridTextColumn Header="Datum Prodeje" Binding="{Binding SaleDate}" Width="*" />
+                            <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding PriceWithoutVAT}" Width="*" />
+                            <DataGridTextColumn Header="DPH" Binding="{Binding VAT}" Width="*" />
+                            <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithVAT}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <!-- Panel s filtrováním -->
+                <GroupBox Header="Filtrování" FontWeight="Bold" Margin="5" Grid.Column="1">
+                    <StackPanel Margin="10">
+                        <!-- Filtrace dle dnů -->
+                        <TextBlock Text="Dle dnů" FontWeight="Bold" Margin="0,0,0,5" />
+                        <UniformGrid Columns="2" Margin="0,0,0,10">
+                            <CheckBox Content="Po" />
+                            <CheckBox Content="Út" />
+                            <CheckBox Content="St" />
+                            <CheckBox Content="Čt" />
+                            <CheckBox Content="Pá" />
+                            <CheckBox Content="So" IsChecked="True"/>
+                            <CheckBox Content="Ne" IsChecked="True"/>
+                        </UniformGrid>
+
+                        <!-- Filtrace dle modelu -->
+                        <TextBlock Text="Dle modelu" FontWeight="Bold" Margin="0,5,0,5" />
+                        <ListBox Width="150" Height="100" Name="ModelListBox" SelectionMode="Multiple" SelectedIndex="0">
+                            <ListBoxItem Content="Všechny modely" />
+                        </ListBox>
+
+                        <!-- Tabulka výsledku filtrování -->
+                        <TextBlock Text="Výsledek filtrování" FontWeight="Bold" Margin="0,10,0,5" />
+                        <DataGrid Name="FilteredDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="100">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
+                                <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding PriceWithoutVAT}" Width="*" />
+                                <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithVAT}" Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Souhrn cen -->
+                        <StackPanel Margin="0,10,0,0">
+                            <TextBlock Text="Celková cena bez DPH:" FontWeight="Bold" />
+                            <TextBlock Name="TotalPriceWithoutVAT" />
+                            <TextBlock Text="Celková cena s DPH:" FontWeight="Bold" Margin="0,10,0,0" />
+                            <TextBlock Name="TotalPriceWithVAT" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
