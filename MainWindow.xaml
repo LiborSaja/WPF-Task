@@ -11,9 +11,9 @@
         <StackPanel>
             <!-- Horní řádek s tlačítky -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-                <Button Content="Nahrát soubor" Width="120" Margin="5" />
-                <Button Content="Přidat položku" Width="120" Margin="5" />
-                <Button Content="Smazat položku" Width="120" Margin="5" />
+                <Button Name="BtnImportFile" Content="Nahrát soubor" Width="120" Margin="5" Click="BtnImportFile_Click"/>
+                <Button Name="BtnAddItem" Content="Přidat položku" Width="120" Margin="5" Click="BtnAddItem_Click"/>
+                <Button Name="BtnDelete" Content="Smazat položku" Width="120" Margin="5" Click="BtnDelete_Click"/>
             </StackPanel>
 
             <!-- Tabulka a filtrace -->
@@ -25,14 +25,14 @@
 
                 <!-- Hlavní tabulka s údaji o prodejích -->
                 <GroupBox Header="Údaje o prodejích" FontWeight="Bold" Margin="5" Grid.Column="0">
-                    <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5">
+                    <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5" MaxHeight="400">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="Auto" />
                             <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
-                            <DataGridTextColumn Header="Datum Prodeje" Binding="{Binding SaleDate}" Width="*" />
-                            <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding PriceWithoutVAT}" Width="*" />
-                            <DataGridTextColumn Header="DPH" Binding="{Binding VAT}" Width="*" />
-                            <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithVAT}" Width="*" />
+                            <DataGridTextColumn Header="Datum Prodeje" Binding="{Binding Date}" Width="*" />
+                            <DataGridTextColumn Header="Den" Binding="{Binding DayOfWeekShort}" Width="1*" />
+                            <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding Price}" Width="*" />
+                            <DataGridTextColumn Header="DPH" Binding="{Binding DPH}" Width="*" />
+                            <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithDPH}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
@@ -55,7 +55,6 @@
                         <!-- Filtrace dle modelu -->
                         <TextBlock Text="Dle modelu" FontWeight="Bold" Margin="0,5,0,5" />
                         <ListBox Width="150" Height="100" Name="ModelListBox" SelectionMode="Multiple" SelectedIndex="0">
-                            <ListBoxItem Content="Všechny modely" />
                         </ListBox>
 
                         <!-- Tabulka výsledku filtrování -->
@@ -63,8 +62,8 @@
                         <DataGrid Name="FilteredDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="100">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
-                                <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding PriceWithoutVAT}" Width="*" />
-                                <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithVAT}" Width="*" />
+                                <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding Price}" Width="*" />
+                                <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithDPH}" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
 
