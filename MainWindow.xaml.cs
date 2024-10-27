@@ -21,10 +21,17 @@ using Task.View;
 namespace Task {
     
     public partial class MainWindow : Window, INotifyPropertyChanged {
+        //seznam všech položek, import + manuální přidání
         private List<CarSales> carSalesList = new List<CarSales>();
+        // Kolekce vybraných modelů a dnů
+        private List<string> selectedModels = new List<string>();
+        private List<DayOfWeek> selectedDays = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday }; // Výchozí nastavení pro So a Ne
+        // Filtrovaný seznam pro DataGrid
+        private List<CarSales> filteredSalesList = new List<CarSales>();
+
         public MainWindow() {
-            DataContext = this;
             InitializeComponent();
+            DataContext = this;
 
             // Nastavení DataGridu se seznamem carSalesList
             SalesDataGrid.ItemsSource = carSalesList;
@@ -105,6 +112,9 @@ namespace Task {
                     // Obnovíme DataGrid
                     SalesDataGrid.ItemsSource = null;
                     SalesDataGrid.ItemsSource = carSalesList;
+
+                    ApplyFilters();
+                    UpdateModelListBox();
                 }
             }
             else {
@@ -114,18 +124,87 @@ namespace Task {
 
         //ListBox pro výběr modelu
         private void UpdateModelListBox() {
-            // Skupina modelů s počty
-            var modelCounts = carSalesList
-                .GroupBy(car => car.Model)
-                .Select(g => new ModelCount { ModelName = g.Key, Count = g.Count() })
+            // Získáme unikátní názvy modelů
+            var modelNames = carSalesList
+                .GroupBy(car => car.Model.ToLower())   // Case-insensitive seskupení názvů modelů
+                .Select(group => group.First().Model)  // Použijeme původní název modelu
                 .ToList();
 
             // Přidáme položku "Všechny modely" na začátek
-            modelCounts.Insert(0, new ModelCount { ModelName = "Všechny modely", Count = carSalesList.Count });
+            modelNames.Insert(0, "Všechny modely");
 
             // Nastavení datového zdroje pro ListBox
-            ModelListBox.ItemsSource = modelCounts;
+            ModelListBox.ItemsSource = modelNames;
+
+            // Automaticky vybereme položku "Všechny modely"
+            ModelListBox.SelectedItems.Clear();
+            ModelListBox.SelectedItems.Add("Všechny modely");
         }
+
+        //výběr dle dnů
+        private void DayCheckBox_Changed(object sender, RoutedEventArgs e) {
+            var checkBox = sender as CheckBox;
+
+            // Mapování českých názvů na hodnoty DayOfWeek
+            var dayMapping = new Dictionary<string, DayOfWeek> {
+                { "Po", DayOfWeek.Monday },
+                { "Út", DayOfWeek.Tuesday },
+                { "St", DayOfWeek.Wednesday },
+                { "Čt", DayOfWeek.Thursday },
+                { "Pá", DayOfWeek.Friday },
+                { "So", DayOfWeek.Saturday },
+                { "Ne", DayOfWeek.Sunday }
+            };
+
+            if (checkBox != null && dayMapping.TryGetValue(checkBox.Content.ToString(), out DayOfWeek day)) {
+                if (checkBox.IsChecked == true) {
+                    // Přidáme den, pokud není v seznamu
+                    if (!selectedDays.Contains(day))
+                        selectedDays.Add(day);
+                }
+                else {
+                    // Odebereme den, pokud je v seznamu
+                    selectedDays.Remove(day);
+                }
+            }
+            // Aplikovat filtry po změně zaškrtnutí
+            ApplyFilters();
+        }
+
+        
+        private void ModelListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            selectedModels = ModelListBox.SelectedItems.Cast<string>().ToList();
+            ApplyFilters();
+        }
+
+        //logika filtrování
+        private void ApplyFilters() {
+            if (FilteredDataGrid == null)
+                return;
+
+            // Filtrovat podle vybraných dnů a modelů
+            var filtered = carSalesList
+                .Where(car => selectedModels.Contains("Všechny modely") ||
+                      selectedModels.Any(model => model.Equals(car.Model, StringComparison.OrdinalIgnoreCase)))
+                .Where(car => selectedDays.Contains(car.Date.DayOfWeek));
+
+            // Seskupit podle modelu a spočítat celkovou cenu a počet prodaných kusů
+            var summarizedSales = filtered
+                .GroupBy(car => car.Model.ToLower())
+                .Select(group => new SumarizedCarSales {
+                    Model = group.Key,
+                    Count = group.Count(),                                   // Počet prodaných kusů
+                    TotalPriceWithoutDPH = group.Sum(car => car.Price),      // Celková cena bez DPH
+                    TotalPriceWithDPH = group.Sum(car => car.PriceWithDPH)   // Celková cena s DPH
+                })
+                .ToList();
+
+            // Aktualizovat `FilteredDataGrid` s agregovanými daty
+            FilteredDataGrid.ItemsSource = null;
+            FilteredDataGrid.ItemsSource = summarizedSales;
+        }
+
+
 
 
     }

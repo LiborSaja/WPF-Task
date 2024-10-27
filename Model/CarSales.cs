@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Task.Model {
-    public class CarSales {       
+    public class CarSales {
         public string Model { get; set; }
         public DateTime Date { get; set; }
         public double Price { get; set; }

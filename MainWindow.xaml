@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="MainWindow" Height="650" Width="1200">
     <Grid Margin="10">
         <!-- Hlavní StackPanel pro seskupení prvků vertikálně -->
         <StackPanel>
@@ -19,7 +19,7 @@
             <!-- Tabulka a filtrace -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
@@ -27,12 +27,12 @@
                 <GroupBox Header="Údaje o prodejích" FontWeight="Bold" Margin="5" Grid.Column="0">
                     <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5" MaxHeight="400">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
-                            <DataGridTextColumn Header="Datum Prodeje" Binding="{Binding Date}" Width="*" />
-                            <DataGridTextColumn Header="Den" Binding="{Binding DayOfWeekShort}" Width="1*" />
-                            <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding Price}" Width="*" />
-                            <DataGridTextColumn Header="DPH" Binding="{Binding DPH}" Width="*" />
-                            <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithDPH}" Width="*" />
+                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="auto" />
+                            <DataGridTextColumn Header="Datum Prodeje" Binding="{Binding Date}" Width="auto" />
+                            <DataGridTextColumn Header="Den" Binding="{Binding DayOfWeekShort}" Width="auto" />
+                            <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding Price}" Width="auto" />
+                            <DataGridTextColumn Header="DPH" Binding="{Binding DPH}" Width="auto" />
+                            <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithDPH}" Width="auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
@@ -40,42 +40,83 @@
                 <!-- Panel s filtrováním -->
                 <GroupBox Header="Filtrování" FontWeight="Bold" Margin="5" Grid.Column="1">
                     <StackPanel Margin="10">
-                        <!-- Filtrace dle dnů -->
-                        <TextBlock Text="Dle dnů" FontWeight="Bold" Margin="0,0,0,5" />
-                        <UniformGrid Columns="2" Margin="0,0,0,10">
-                            <CheckBox Content="Po" />
-                            <CheckBox Content="Út" />
-                            <CheckBox Content="St" />
-                            <CheckBox Content="Čt" />
-                            <CheckBox Content="Pá" />
-                            <CheckBox Content="So" IsChecked="True"/>
-                            <CheckBox Content="Ne" IsChecked="True"/>
-                        </UniformGrid>
+                        <!-- Mřížka pro umístění filtrů vedle sebe -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <!-- Filtrace dle modelu -->
-                        <TextBlock Text="Dle modelu" FontWeight="Bold" Margin="0,5,0,5" />
-                        <ListBox Width="150" Height="100" Name="ModelListBox" SelectionMode="Multiple" SelectedIndex="0">
-                        </ListBox>
+                            <!-- Filtrace dle dnů -->
+                            <GroupBox Header="Dle dnů" FontWeight="Bold" Margin="5" Padding="5" Grid.Column="0">
+                                <UniformGrid Columns="2" Margin="0,0,0,10">
+                                    <CheckBox Name="Monday" Content="Po" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
+                                    <CheckBox Name="Tuesday" Content="Út" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
+                                    <CheckBox Name="Wendsday" Content="St" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
+                                    <CheckBox Name="Thursday" Content="Čt" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
+                                    <CheckBox Name="Friday" Content="Pá" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
+                                    <CheckBox Name="Saturday" Content="So" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed" IsChecked="True"/>
+                                    <CheckBox Name="Sunday" Content="Ne" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed" IsChecked="True"/>
+                                </UniformGrid>
+                            </GroupBox>
+
+                            <!-- Filtrace dle modelu -->
+                            <GroupBox Header="Dle modelu" FontWeight="Bold" Margin="5" Padding="5" Grid.Column="1">
+                                <ListBox Width="150" Height="100" Name="ModelListBox" SelectionMode="Multiple" SelectionChanged="ModelListBox_SelectionChanged">
+                                </ListBox>
+                            </GroupBox>
+                        </Grid>
 
                         <!-- Tabulka výsledku filtrování -->
-                        <TextBlock Text="Výsledek filtrování" FontWeight="Bold" Margin="0,10,0,5" />
-                        <DataGrid Name="FilteredDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="100">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
-                                <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding Price}" Width="*" />
-                                <DataGridTextColumn Header="Cena s DPH" Binding="{Binding PriceWithDPH}" Width="*" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <GroupBox Header="Výsledek filtrování" FontWeight="Bold" Margin="5" Padding="5">
+                            <StackPanel>
+                                <!-- DataGrid pro zobrazení výsledků -->
+                                <DataGrid Name="FilteredDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
+                                        <DataGridTextColumn Header="* CCVPVDM, bez DPH" Binding="{Binding TotalPriceWithoutDPH}" Width="*" />
+                                        <DataGridTextColumn Header="* CCVPVDM, s DPH" Binding="{Binding TotalPriceWithDPH}" Width="*" />
+                                        <DataGridTextColumn Header="Počet prodaných vozů" Binding="{Binding Count}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <!-- Poznámka pod tabulkou -->
+                                <TextBlock Text="* CCVPVDM = Celková cena všech prodaných vozů daného modelu" Margin="0,5,0,0" FontStyle="Italic" Foreground="Gray" />
+                            </StackPanel>
+                        </GroupBox>
 
-                        <!-- Souhrn cen -->
-                        <StackPanel Margin="0,10,0,0">
-                            <TextBlock Text="Celková cena bez DPH:" FontWeight="Bold" />
-                            <TextBlock Name="TotalPriceWithoutVAT" />
-                            <TextBlock Text="Celková cena s DPH:" FontWeight="Bold" Margin="0,10,0,0" />
-                            <TextBlock Name="TotalPriceWithVAT" />
-                        </StackPanel>
+                        <!-- Dodatečné info -->
+                        <GroupBox Header="Dodatečné informace" Margin="5">
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Počet všech prodaných vozů:" FontWeight="Bold" Grid.Row="0" Grid.Column="0" />
+                                <TextBlock Name="TotalCarsCount" Grid.Row="0" Grid.Column="1" />
+
+                                <TextBlock Text="Počet prodaných modelů:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" />
+                                <TextBlock Name="TotalModelCount" Grid.Row="1" Grid.Column="1" />
+
+                                <TextBlock Text="Celková cena všech prodaných vozů bez DPH:" FontWeight="Bold" Grid.Row="2" Grid.Column="0" />
+                                <TextBlock Name="TotalPriceWithoutDPH" Grid.Row="2" Grid.Column="1" />
+
+                                <TextBlock Text="Celková cena všech prodaných vozů s DPH:" FontWeight="Bold" Grid.Row="3" Grid.Column="0" />
+                                <TextBlock Name="TotalPriceWithDPH" Grid.Row="3" Grid.Column="1" />
+                            </Grid>
+                        </GroupBox>
+
+
                     </StackPanel>
                 </GroupBox>
+
             </Grid>
         </StackPanel>
     </Grid>
