@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Task.Model;
 
 namespace Task.View {
@@ -24,12 +13,20 @@ namespace Task.View {
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e) {
             try {
-                // Vytvoříme novou položku typu CarSales a nastavíme její vlastnosti z formuláře
+                // získání a ověření hodnot z textových polí
+                double price = double.Parse(PriceWithoutDPHTextBox.Text);
+                double dph = double.Parse(DPHTextBox.Text);
+                if (price < 0 || dph < 0) {
+                    MessageBox.Show("Zadejte kladné hodnoty pro cenu a DPH.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // vytvoření nového objektu CarSales s hodnotami zadanými uživatelem
                 NewCarSale = new CarSales {
                     Model = ModelTextBox.Text,
                     Date = SaleDatePicker.SelectedDate ?? DateTime.Now,
-                    Price = double.Parse(PriceWithoutVATTextBox.Text),
-                    DPH = double.Parse(VATTextBox.Text)
+                    Price = double.Parse(PriceWithoutDPHTextBox.Text),
+                    DPH = double.Parse(DPHTextBox.Text)
                 };
 
                 IsItemAdded = true;                

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CarSales>
+    <CarSale>
+        <Model>Škoda Oktávia</Model>
+        <Date>2010-12-02</Date>
+        <Price>500000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Felicia</Model>
+        <Date>2000-12-03</Date>
+        <Price>210000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Fabia</Model>
+        <Date>2010-12-04</Date>
+        <Price>350000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Oktávia</Model>
+        <Date>2010-12-04</Date>
+        <Price>500000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Oktávia</Model>
+        <Date>2010-12-05</Date>
+        <Price>500000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Fabia</Model>
+        <Date>2010-12-05</Date>
+        <Price>350000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Fabia</Model>
+        <Date>2010-12-06</Date>
+        <Price>350000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Forman</Model>
+        <Date>2000-12-04</Date>
+        <Price>100000</Price>
+        <DPH>19</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Favorit</Model>
+        <Date>2000-12-05</Date>
+        <Price>80000</Price>
+        <DPH>19</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Forman</Model>
+        <Date>2000-12-06</Date>
+        <Price>100000</Price>
+        <DPH>19</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Felicia</Model>
+        <Date>2000-12-03</Date>
+        <Price>210000</Price>
+        <DPH>19</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Felicia</Model>
+        <Date>2000-12-02</Date>
+        <Price>210000</Price>
+        <DPH>19</DPH>
+    </CarSale>
+    <CarSale>
+        <Model>Škoda Oktávia</Model>
+        <Date>2010-12-07</Date>
+        <Price>500000</Price>
+        <DPH>20</DPH>
+    </CarSale>
+</CarSales>
+

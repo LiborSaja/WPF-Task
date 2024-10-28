@@ -1,19 +1,23 @@
 ﻿<Window x:Class="Task.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Task"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1200">
+        Title="Prodeje" Height="680" Width="1200" WindowStartupLocation="CenterScreen"
+        Background="#f2f2f2" Icon="Files/business.ico">
+
     <Grid Margin="10">
         <!-- Hlavní StackPanel pro seskupení prvků vertikálně -->
         <StackPanel>
             <!-- Horní řádek s tlačítky -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-                <Button Name="BtnImportFile" Content="Nahrát soubor" Width="120" Margin="5" Click="BtnImportFile_Click"/>
-                <Button Name="BtnAddItem" Content="Přidat položku" Width="120" Margin="5" Click="BtnAddItem_Click"/>
-                <Button Name="BtnDelete" Content="Smazat položku" Width="120" Margin="5" Click="BtnDelete_Click"/>
+                <Button Name="BtnImportFile" Content="Nahrát soubor" Width="140" Margin="5" Click="BtnImportFile_Click"
+                        Background="#007ACC" Foreground="White" FontWeight="Bold" BorderThickness="0" Padding="10,5"
+                        HorizontalAlignment="Center" />
+                <Button Name="BtnAddItem" Content="Přidat položku" Width="140" Margin="5" Click="BtnAddItem_Click"
+                        Background="#28a745" Foreground="White" FontWeight="Bold" BorderThickness="0" Padding="10,5"
+                        HorizontalAlignment="Center" />
+                <Button Name="BtnDelete" Content="Smazat položku" Width="140" Margin="5" Click="BtnDelete_Click"
+                        Background="#dc3545" Foreground="White" FontWeight="Bold" BorderThickness="0" Padding="10,5"
+                        HorizontalAlignment="Center" />
             </StackPanel>
 
             <!-- Tabulka a filtrace -->
@@ -24,8 +28,10 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Hlavní tabulka s údaji o prodejích -->
-                <GroupBox Header="Údaje o prodejích" FontWeight="Bold" Margin="5" Grid.Column="0">
-                    <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5" MaxHeight="400">
+                <GroupBox Header="Údaje o prodejích" FontWeight="Bold" Margin="5" Grid.Column="0"
+                          BorderBrush="#333333" Background="White">
+                    <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5" MaxHeight="400"
+                              IsReadOnly="True" Background="White" BorderThickness="0" RowBackground="#f9f9f9" AlternatingRowBackground="#e9e9e9">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="auto" />
                             <DataGridTextColumn Header="Datum Prodeje" Binding="{Binding Date}" Width="auto" />
@@ -38,7 +44,7 @@
                 </GroupBox>
 
                 <!-- Panel s filtrováním -->
-                <GroupBox Header="Filtrování" FontWeight="Bold" Margin="5" Grid.Column="1">
+                <GroupBox Header="Filtrování" FontWeight="Bold" Margin="5" Grid.Column="1" BorderBrush="#333333" Background="White">
                     <StackPanel Margin="10">
                         <!-- Mřížka pro umístění filtrů vedle sebe -->
                         <Grid>
@@ -48,7 +54,7 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Filtrace dle dnů -->
-                            <GroupBox Header="Dle dnů" FontWeight="Bold" Margin="5" Padding="5" Grid.Column="0">
+                            <GroupBox Header="Dle dnů" FontWeight="Bold" Margin="5" Padding="5" Grid.Column="0" BorderBrush="#999999">
                                 <UniformGrid Columns="2" Margin="0,0,0,10">
                                     <CheckBox Name="Monday" Content="Po" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
                                     <CheckBox Name="Tuesday" Content="Út" Checked="DayCheckBox_Changed" Unchecked="DayCheckBox_Changed"/>
@@ -61,17 +67,17 @@
                             </GroupBox>
 
                             <!-- Filtrace dle modelu -->
-                            <GroupBox Header="Dle modelu" FontWeight="Bold" Margin="5" Padding="5" Grid.Column="1">
-                                <ListBox Width="150" Height="100" Name="ModelListBox" SelectionMode="Multiple" SelectionChanged="ModelListBox_SelectionChanged">
-                                </ListBox>
+                            <GroupBox Header="Dle modelu" FontWeight="Bold" Margin="5" Padding="5" Grid.Column="1" BorderBrush="#999999">
+                                <ListBox Width="150" Height="100" Name="ModelListBox" SelectionMode="Multiple" SelectionChanged="ModelListBox_SelectionChanged" />
                             </GroupBox>
                         </Grid>
 
                         <!-- Tabulka výsledku filtrování -->
-                        <GroupBox Header="Výsledek filtrování" FontWeight="Bold" Margin="5" Padding="5">
+                        <GroupBox Header="Výsledek filtrování" FontWeight="Bold" Margin="5" Padding="5" BorderBrush="#333333">
                             <StackPanel>
                                 <!-- DataGrid pro zobrazení výsledků -->
-                                <DataGrid Name="FilteredDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="100">
+                                <DataGrid Name="FilteredDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="200" IsReadOnly="True"
+                                          Background="White" BorderThickness="0" RowBackground="#f9f9f9" AlternatingRowBackground="#e9e9e9">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*" />
                                         <DataGridTextColumn Header="* CCVPVDM, bez DPH" Binding="{Binding TotalPriceWithoutDPH}" Width="*" />
@@ -79,17 +85,16 @@
                                         <DataGridTextColumn Header="Počet prodaných vozů" Binding="{Binding Count}" Width="*"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <!-- Poznámka pod tabulkou -->
                                 <TextBlock Text="* CCVPVDM = Celková cena všech prodaných vozů daného modelu" Margin="0,5,0,0" FontStyle="Italic" Foreground="Gray" />
                             </StackPanel>
                         </GroupBox>
 
                         <!-- Dodatečné info -->
-                        <GroupBox Header="Dodatečné informace" Margin="5">
+                        <GroupBox Header="Dodatečné informace" Margin="5" BorderBrush="#333333" Background="White">
                             <Grid Margin="0,10,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
@@ -100,23 +105,20 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="Počet všech prodaných vozů:" FontWeight="Bold" Grid.Row="0" Grid.Column="0" />
-                                <TextBlock Name="TotalCarsCount" Grid.Row="0" Grid.Column="1" />
+                                <TextBlock Name="TotalCarsCount" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"/>
 
                                 <TextBlock Text="Počet prodaných modelů:" FontWeight="Bold" Grid.Row="1" Grid.Column="0" />
-                                <TextBlock Name="TotalModelCount" Grid.Row="1" Grid.Column="1" />
+                                <TextBlock Name="TotalModelCount" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
 
                                 <TextBlock Text="Celková cena všech prodaných vozů bez DPH:" FontWeight="Bold" Grid.Row="2" Grid.Column="0" />
-                                <TextBlock Name="TotalPriceWithoutDPH" Grid.Row="2" Grid.Column="1" />
+                                <TextBlock Name="TotalPriceWithoutDPH" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"/>
 
                                 <TextBlock Text="Celková cena všech prodaných vozů s DPH:" FontWeight="Bold" Grid.Row="3" Grid.Column="0" />
-                                <TextBlock Name="TotalPriceWithDPH" Grid.Row="3" Grid.Column="1" />
+                                <TextBlock Name="TotalPriceWithDPH" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"/>
                             </Grid>
                         </GroupBox>
-
-
                     </StackPanel>
                 </GroupBox>
-
             </Grid>
         </StackPanel>
     </Grid>

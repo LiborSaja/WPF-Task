@@ -104,8 +104,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Utilities\" />
-    <Folder Include="ViewModel\" />
+    <Resource Include="Files\Cars.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Files\business.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
