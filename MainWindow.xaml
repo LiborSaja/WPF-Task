@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Hlavní tabulka s údaji o prodejích -->
-                <GroupBox Header="Údaje o prodejích" FontWeight="Bold" Margin="5" Grid.Column="0"
+                <GroupBox Header="Přehled prodejů (import + manuální přidání)" FontWeight="Bold" Margin="5" Grid.Column="0"
                           BorderBrush="#333333" Background="White">
                     <DataGrid Name="SalesDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="5" MaxHeight="400"
                               IsReadOnly="True" Background="White" BorderThickness="0" RowBackground="#f9f9f9" AlternatingRowBackground="#e9e9e9">
